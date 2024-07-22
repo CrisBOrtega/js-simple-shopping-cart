@@ -88,10 +88,24 @@ const agregarCurso = (e) => {
 //leer el contenido del HTML  al que dimos clic
 //y extraer la informacion del curso
 
+const eliminarArticulo = (e) => {
+    //console.log("desde eliminar curso")
+    //console.log(e.target.classList)
+    if(e.target.classList.contains("borrar-curso")){
+        //console.log(e.target.getAttribute("data-id"));
+        const cursoId = e.target.getAttribute('data-id');
+        //eliminar el curso del carrito utilizando filter
+        articulosCarrito = articulosCarrito.filter(articulo => articulo.id !== cursoId);
+        console.log(articulosCarrito)
+        carritoHTML()
 
+    }
+}
 
 const cargarEventListeners = ()=>{
     listaCursos.addEventListener("click", agregarCurso)
+    //eliminar un curso del carrito
+    carrito.addEventListener("click", eliminarArticulo)
 }
 
 cargarEventListeners()
