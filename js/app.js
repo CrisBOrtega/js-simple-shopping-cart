@@ -1,10 +1,48 @@
+let articulosCarrito = []
+
 const carrito = document.querySelector("#carrito");
 
 const listaCursos = document.querySelector("#lista-cursos");
 
 const contenedorCarrito = document.querySelector("#lista-carrito tbody");
 
-const limpiarCarrito = document.querySelector("#vaciar-carrito");
+
+const limpiarCarrito = ()=> {
+
+    //forma lenta
+    //contenedorCarrito.innerHTML = "";
+
+    //forma rapida
+    while(contenedorCarrito.firstChild){
+        contenedorCarrito.removeChild(contenedorCarrito.firstChild);
+    }
+
+}
+
+const carritoHTML = () => {
+
+    //limpiar HTML
+    limpiarCarrito()
+
+    //recorre los articulos en el carrito
+    articulosCarrito.forEach(articulo => {
+        const { imagen , titulo , precio , cantidad , id } = articulo;
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                <td>
+                    <img src="${imagen}"  width="100">
+                </td>
+                <td>${titulo}</td>
+                <td>${precio}</td>
+                <td>${cantidad}</td>
+                <td>
+                    <a href="#" class="borrar-curso" data-id="${id}">X</a>
+                </td>
+        `;
+        //agregar esta celda al tbody
+        contenedorCarrito.appendChild(row);
+    })
+}
 
 const leerDatosCurso= (curso) => {
 
@@ -16,7 +54,11 @@ const leerDatosCurso= (curso) => {
         id: curso.querySelector('a').getAttribute('data-id'),
         cantidad : 1
     }
-    console.log(infoCurso);
+    //console.log(infoCurso);
+    //agregar elementos al arreglo de carrito
+    articulosCarrito = [ ...articulosCarrito, infoCurso]
+    console.log(articulosCarrito)
+    carritoHTML()
 }
 
 const agregarCurso = (e) => {
